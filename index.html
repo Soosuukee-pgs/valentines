@@ -3,13 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page de Test</title>
+    <title>Quiz en JSON</title>
   </head>
   <body>
-    <h1>Bienvenue sur ma page de test !</h1>
-    <p>
-      Ceci est un fichier HTML simple que j'ai ajouté pour tester l'ajout et le
-      push sur GitHub.
-    </p>
+    <h1>Quiz</h1>
+    <div id="quiz-container"></div>
+    <button id="submit-btn">Soumettre les réponses</button>
+
+    <div id="results-container" style="display: none">
+      <h3>Résultats</h3>
+      <div id="results"></div>
+    </div>
+
+    <script>
+      // Charger le fichier quiz.json
+      fetch("quiz.json")
+        .then((response) => response.json()) // Convertir la réponse en JSON
+        .then((quizData) => {
+          console.log(quizData); // Afficher les données du quiz dans la console
+
+          // Affichage du quiz sur la page HTML
+          const quizContainer = document.getElementById("quiz-container");
+          quizData.questions.forEach((question, index) => {
+            const questionElement = document.createElement("div");
+            questionElement.innerHTML = `
+            <h3>${question.question}</h3>
+            <ul>
+              ${Object.keys(question.options)
+                .map(
+                  (key) => `
+                <li>
+                  <input type="radio" name="question-${index}" value="${key}" id="q${index}-o${key}">
+                  <label for="q${index}-o${key}">${question.options[key]}</label>
+                </li>
+              `
+                )
+                .join("")}
+            </ul>
+          `;
+            quizContainer.appendChild(questionElement);
+          });
+
+          // Lorsque le bouton "Soumettre les réponses" est cliqué
+          document
+            .getElementById("submit-btn")
+            .addEventListener("click", () => {
+              let resultsHtml = "";
+              quizData.questions.forEach((question, index) => {
+                const selectedOption = document.querySelector(
+                  `input[name="question-${index}"]:checked`
+                );
+                const isCorrect =
+                  selectedOption && selectedOption.value === question.answer;
+                resultsHtml += `
+              <p><strong>Question ${index + 1} :</strong> ${
+                  question.question
+                }<br>
+              Réponse donnée : ${
+                selectedOption
+                  ? question.options[selectedOption.value]
+                  : "Aucune réponse"
+              }<br>
+              ${
+                isCorrect
+                  ? '<span style="color:green;">Correct !</span>'
+                  : '<span style="color:red;">Incorrect !</span>'
+              }</p>
+            `;
+              });
+
+              // Afficher les résultats
+              document.getElementById("results").innerHTML = resultsHtml;
+              document.getElementById("results-container").style.display =
+                "block";
+            });
+        })
+        .catch((error) =>
+          console.error("Erreur lors du chargement du fichier JSON:", error)
+        );
+    </script>
   </body>
 </html>

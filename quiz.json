@@ -1,5 +1,22 @@
 {
-    "name": "Valentines Project",
-    "version": "1.0.0",
-    "description": "Un exemple de fichier JSON"
+  "questions": [
+    {
+      "question": "Quelle est la capitale de la France ?",
+      "options": {
+        "1": "Lyon",
+        "2": "Paris",
+        "3": "Marseille"
+      },
+      "answer": "2"
+    },
+    {
+      "question": "Quel est le plus grand océan du monde ?",
+      "options": {
+        "1": "Océan Atlantique",
+        "2": "Océan Pacifique",
+        "3": "Océan Indien"
+      },
+      "answer": "2"
+    }
+  ]
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">My Portfolio</div>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Section de maintenance avant le 14 février -->
+    <section id="maintenance" style="display: none">
+      <div class="container">
+        <h1>Site Under Maintenance</h1>
+        <p>
+          The website will be available on February 14th at 9 AM. In the
+          meantime, feel free to play the Dinosaur Game!
+        </p>
+        <button onclick="startDinosaurGame()">Play Dinosaur Game</button>
+        <div id="dinosaur-game" style="display: none">
+          <!-- Placeholder pour le jeu du dinosaure -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Autres sections de ton portfolio (About, Skills, etc.) -->
+
+    <section id="hero">
+      <div class="container">
+        <h1>Welcome to My Portfolio</h1>
+        <p>
+          I'm a passionate developer who loves building amazing web experiences.
+        </p>
+        <a href="#projects" class="btn">View My Work</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 My Portfolio. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="dinosaurGame.js"></script>
+    <script>
+      function checkDateAndShowMaintenance() {
+        const currentDate = new Date();
+        const launchDate = new Date("2025-02-14T09:00:00");
+
+        if (currentDate < launchDate) {
+          // Afficher le message de maintenance et cacher le contenu normal
+          document.getElementById("maintenance").style.display = "block";
+        }
+      }
+
+      function startDinosaurGame() {
+        document.getElementById("dinosaur-game").style.display = "block";
+
+        // Insertion du jeu du dinosaure ici
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://chromedino.com/";
+        iframe.frameBorder = "0";
+        iframe.scrolling = "no";
+        iframe.width = "100%";
+        iframe.height = "100%";
+        iframe.loading = "lazy";
+
+        const gameContainer = document.getElementById("dinosaur-game");
+        gameContainer.innerHTML = ""; // Clear any existing content
+        gameContainer.appendChild(iframe);
+      }
+
+      // Vérifie si la date actuelle est avant la date de lancement du site
+      checkDateAndShowMaintenance();
+    </script>
+  </body>
+</html>
